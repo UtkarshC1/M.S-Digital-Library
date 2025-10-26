@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>M S Digital Library Ayodhya — Premium 24/7 Study Hall</title>
+    <meta
+      name="description"
+      content="M S Digital Library — Ayodhya's premium 24/7 study hall. Silent cabins, 100% power backup, high-speed fiber, secure access."
+    />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Poppins:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
+    />
+
+    <style>
+      :root {
+        --primary: #9b111e; /* Deep Red/Maroon */
+        --accent: #ffd166; /* Golden Yellow */
+        --muted: #6b6b6b;
+        --bg: #f8fafc;
+        --card: #ffffff;
+        --glass-shadow: 0 6px 18px rgba(16, 24, 40, 0.06);
+        --shadow: 0 8px 30px rgba(22, 22, 22, 0.08);
+        --max-width: 1200px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        height: 100%;
+      }
+
+      body {
+        font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        background: linear-gradient(180deg, #fbfdff 0%, #f6f8fb 100%);
+        color: #111827;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        line-height: 1.5;
+        margin: 0;
+        padding-top: 72px; /* Space for fixed header */
+      }
+
+      .header {
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 72px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 24px;
+        backdrop-filter: blur(6px) saturate(120%);
+        background: rgba(255, 255, 255, 0.85); /* Semi-transparent white */
+        box-shadow: 0 4px 18px rgba(15, 23, 42, 0.06);
+        z-index: 120;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .logo-mark {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--primary), #7b0d11);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 700;
+        font-family: Poppins;
+      }
+
+      .brand h1 {
+        font-size: 1rem;
+        margin: 0;
+        color: var(--primary);
+        font-family: Poppins;
+      }
+
+      nav a {
+        /* Only one CTA in nav, keeping it clean */
+        color: var(--muted);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+      }
+
+      .btn {
+        display: inline-block;
+        background: var(--accent);
+        color: var(--primary);
+        font-weight: 700;
+        padding: 10px 16px;
+        border-radius: 10px;
+        text-decoration: none;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+
+      .btn:hover {
+        filter: brightness(0.9);
+      }
+
+      .btn.secondary {
+        background: transparent;
+        color: var(--primary);
+        border: 1.5px solid rgba(155, 17, 30, 0.08);
+      }
+
+      .hero {
+        max-width: var(--max-width);
+        margin: 0 auto; /* Remove redundant margin values */
+        padding: 28px 20px 40px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 24px;
+        align-items: center;
+      }
+
+      .hero-inner {
+        background: linear-gradient(
+          180deg,
+          rgba(155, 17, 30, 0.06),
+          rgba(255, 209, 102, 0.03)
+        );
+        padding: 36px;
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .headline {
+        font-family: Poppins;
+        font-size: 2rem;
+        color: var(--primary);
+        margin: 0;
+      }
+
+      .sub {
+        color: var(--muted);
+        margin: 0;
+        font-weight: 500;
+      }
+
+      .hero-cta {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .badges {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .badge {
+        background: var(--card);
+        padding: 10px 14px;
+        border-radius: 12px;
+        box-shadow: var(--glass-shadow);
+        font-weight: 600;
+        color: var(--muted);
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        font-size: 0.9rem;
+      }
+
+      .container {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      section {
+        padding: 48px 0;
+      }
+
+      h2 {
+        font-family: Poppins;
+        color: var(--primary);
+        font-size: 1.6rem;
+        margin-bottom: 12px;
+      }
+
+      p.lead {
+        color: var(--muted);
+        margin-bottom: 18px;
+        max-width: 700px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .card {
+        background: var(--card);
+        border-radius: 14px;
+        padding: 22px;
+        box-shadow: var(--glass-shadow);
+        transition: transform 0.28s ease, box-shadow 0.28s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-4px); /* Slightly less intense hover */
+        box-shadow: 0 14px 30px rgba(16, 24, 40, 0.08);
+      }
+
+      .gallery {
+        display: flex;
+        gap: 12px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 8px;
+      }
+
+      .gallery img {
+        flex: 0 0 80%;
+        max-width: 80%;
+        scroll-snap-align: start; /* Snap to start for easier viewing */
+        border-radius: 12px;
+        height: 220px;
+        object-fit: cover;
+      }
+
+      .pricing-grid {
+        display: flex;
+        gap: 16px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 12px;
+      }
+
+      .plan {
+        flex: 0 0 85%;
+        max-width: 85%;
+        background: white;
+        padding: 18px;
+        border-radius: 14px;
+        box-shadow: var(--glass-shadow);
+        border-top: 6px solid transparent;
+        scroll-snap-align: start;
+      }
+
+      .plan.recommended {
+        border-top-color: var(--primary); /* Use primary color for main plan */
+        box-shadow: 0 24px 50px rgba(16, 24, 40, 0.08);
+        background: linear-gradient(
+          180deg,
+          #fff 0%,
+          rgba(155, 17, 30, 0.02) 100%
+        );
+      }
+
+      .price {
+        font-size: 1.8rem; /* Slightly larger price */
+        font-weight: 800;
+        color: var(--primary);
+      }
+
+      .features {
+        margin: 10px 0 14px 0;
+        color: var(--muted);
+        list-style: none;
+        padding: 0;
+        font-size: 0.95rem;
+      }
+
+      .features li {
+        padding: 6px 0;
+        border-bottom: 1px dashed rgba(0, 0, 0, 0.05); /* Light dashed separator */
+      }
+
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .map {
+        height: 360px; /* Slightly taller map */
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      .form input,
+      .form select,
+      .form textarea {
+        width: 100%;
+        padding: 12px;
+        border-radius: 10px;
+        border: 1px solid #e6e9ee;
+        margin-top: 10px;
+        font-size: 0.95rem;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      @media (min-width: 600px) {
+        .hero {
+          grid-template-columns: 1fr 1fr;
+          padding: 48px 20px 60px; /* More padding on desktop */
+        }
+
+        .plan {
+          flex: 1;
+          max-width: none;
+        }
+
+        .gallery img {
+          flex: 1;
+          max-width: 33%;
+        }
+      }
+
+      @media (min-width: 900px) {
+        .grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .contact-grid {
+          grid-template-columns: 1fr 420px;
+        }
+      }
+
+      /* Focus styling for accessibility */
+      :focus {
+        outline: 3px solid rgba(155, 17, 30, 0.18);
+        outline-offset: 3px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="header container" role="banner">
+      <div class="brand">
+        <div class="logo-mark">MS</div>
+        <div>
+          <h1>M S Digital Library</h1>
+          <div style="font-size: 0.8rem; color: var(--muted); margin-top: 2px">
+            Ayodhya — 24/7 Study Hall
+          </div>
+        </div>
+      </div>
+
+      <nav aria-label="Primary navigation">
+        <a class="btn" href="#contact">Book a Visit</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero container" aria-labelledby="hero-title">
+        <div class="hero-inner" data-aos="fade-up">
+          <div>
+            <h2 id="hero-title" class="headline">
+              Zero Distractions. Maximum Focus.
+            </h2>
+            <p class="sub">
+              Ayodhya’s premium 24/7 study hall — silent cabins, secure access,
+              100% power backup and blazing fiber internet.
+            </p>
+          </div>
+
+          <div class="hero-cta">
+            <a class="btn" href="#pricing">View Plans & Enroll</a>
+            <a class="btn secondary" href="#contact">Book a Visit</a>
+          </div>
+
+          <div class="badges" aria-hidden="false">
+            <div class="badge">📶 High-Speed Fiber</div>
+            <div class="badge">🔒 24/7 Security</div>
+            <div class="badge">❄️ A/C Comfort</div>
+            <div class="badge">⚡ 100% Power Backup</div>
+          </div>
+        </div>
+
+        <div
+          style="
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+          "
+          data-aos="fade-left"
+        >
+          <picture>
+            <source srcset="placeholder_hero.webp" type="image/webp" />
+            <img
+              src="placeholder_hero.jpg"
+              alt="Study cabin interior with desk and task lamp"
+              style="
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+                min-height: 380px;
+              "
+            />
+          </picture>
+        </div>
+      </section>
+
+      <section
+        id="advantage"
+        class="container"
+        aria-labelledby="advantage-title"
+      >
+        <h2 id="advantage-title">Achieve Your Competitive Edge</h2>
+        <p class="lead">
+          Thoughtfully designed spaces and policies to help you focus, build
+          momentum and hit target goals—day or night.
+        </p>
+
+        <div class="grid">
+          <article class="card" data-aos="fade-up">
+            <h3>Silent Productivity</h3>
+            <p>
+              Sound-dampened private cabins with ergonomic 30" desks — built for
+              long study sessions.
+            </p>
+          </article>
+
+          <article class="card" data-aos="fade-up" data-aos-delay="120">
+            <h3>Premium Cabin Space</h3>
+            <p>
+              Large desks, task lamps, and secure shelving — everything you need
+              to stay organised.
+            </p>
+          </article>
+
+          <article class="card" data-aos="fade-up" data-aos-delay="240">
+            <h3>24/7 Security & Power</h3>
+            <p>
+              Access control & CCTV, plus **UPS + generator** so your session
+              never stops.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section
+        id="facilities"
+        class="container"
+        aria-labelledby="facilities-title"
+      >
+        <h2 id="facilities-title">Designed for Success</h2>
+        <p class="lead">Amenities curated for comfort and focus.</p>
+
+        <div class="gallery" role="list">
+          <img
+            loading="lazy"
+            src="placeholder_study.jpg"
+            alt="Individual study cabin"
+            role="listitem"
+          />
+          <img
+            loading="lazy"
+            src="placeholder_cafe.jpg"
+            alt="Cafe and vending area"
+            role="listitem"
+          />
+          <img
+            loading="lazy"
+            src="placeholder_wifi.jpg"
+            alt="High speed wifi and router room"
+            role="listitem"
+          />
+        </div>
+
+        <div style="margin-top: 18px" data-aos="fade-up">
+          <ul style="color: var(--muted); list-style: disc; padding-left: 20px">
+            <li>
+              <strong>Dedicated fiber connection</strong> — stable video
+              lectures & downloads.
+            </li>
+            <li>
+              <strong>RO water & vending</strong> — healthy, affordable
+              refreshments on-site.
+            </li>
+            <li>
+              <strong>Clean facilities</strong> — daily housekeeping and
+              separate washrooms.
+            </li>
+            <li>
+              <strong>Reading resources</strong> — newspapers, magazines and
+              competitive exam books.
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="pricing" class="container" aria-labelledby="pricing-title">
+        <h2 id="pricing-title">Flexible Plans — Choose Your Focus</h2>
+        <p class="lead">
+          Transparent pricing, simple add-ons and an optional seat reservation
+          for busy months.
+        </p>
+
+        <div class="pricing-grid" data-aos="fade-up">
+          <div class="plan" data-aos="zoom-in">
+            <h3>Morning Session</h3>
+            <div class="price">
+              ₹500
+              <span style="font-size: 0.8rem; color: var(--muted)"
+                >/ month</span
+              >
+            </div>
+            <ul class="features">
+              <li>⏱️ 7 AM – 12 PM (5 hours)</li>
+              <li>📶 Wi‑Fi, ❄️ A/C & Shared Cabin</li>
+              <li>Optional Seat Reservation</li>
+            </ul>
+            <a class="btn" href="#contact">Enroll Now</a>
+          </div>
+
+          <div class="plan" data-aos="zoom-in" data-aos-delay="80">
+            <h3>Afternoon Session</h3>
+            <div class="price">
+              ₹600
+              <span style="font-size: 0.8rem; color: var(--muted)"
+                >/ month</span
+              >
+            </div>
+            <ul class="features">
+              <li>⏱️ 12 PM – 5 PM</li>
+              <li>📚 Ideal for structured study</li>
+              <li>Dedicated Cabin Access Option</li>
+            </ul>
+            <a class="btn" href="#contact">Enroll Now</a>
+          </div>
+
+          <div class="plan" data-aos="zoom-in" data-aos-delay="160">
+            <h3>Evening Session</h3>
+            <div class="price">
+              ₹500
+              <span style="font-size: 0.8rem; color: var(--muted)"
+                >/ month</span
+              >
+            </div>
+            <ul class="features">
+              <li>⏱️ 5 PM – 10 PM</li>
+              <li>🌃 Perfect for working students</li>
+              <li>Quiet focused environment</li>
+            </ul>
+            <a class="btn" href="#contact">Enroll Now</a>
+          </div>
+
+          <div class="plan recommended" data-aos="zoom-in" data-aos-delay="240">
+            <h3>Dedicated 12 Hours (Best Value)</h3>
+            <div class="price">
+              ₹1,000
+              <span style="font-size: 0.8rem; color: var(--muted)"
+                >/ month</span
+              >
+            </div>
+            <ul class="features">
+              <li>⏱️ Any 12 hours/day</li>
+              <li>🔑 Exclusive Cabin & Unlimited Power</li>
+              <li>Highly Recommended for Serious Aspirants</li>
+            </ul>
+            <a class="btn" href="#contact">Enroll Now</a>
+          </div>
+
+          <div class="plan" data-aos="zoom-in" data-aos-delay="320">
+            <h3>Ultimate 24/7</h3>
+            <div class="price">
+              ₹1,300
+              <span style="font-size: 0.8rem; color: var(--muted)"
+                >/ month</span
+              >
+            </div>
+            <ul class="features">
+              <li>⏱️ Unrestricted 24 hours access</li>
+              <li>✅ All Premium Amenities Included</li>
+              <li>Best value for long-term prep</li>
+            </ul>
+            <a class="btn" href="#contact">Enroll Now</a>
+          </div>
+        </div>
+
+        <p style="color: var(--primary); margin-top: 18px; font-weight: 600">
+          Note: One-time admission fee ₹100 + seat reserve ₹100 apply on new
+          enrollments.
+        </p>
+      </section>
+
+      <section id="contact" class="container" aria-labelledby="contact-title">
+        <h2 id="contact-title">Find Your Seat</h2>
+        <p class="lead">
+          Drop a message — we respond on WhatsApp immediately for booking and
+          availability.
+        </p>
+
+        <div class="contact-grid">
+          <div class="map card map" data-aos="fade-up">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14283.435775317316!2d82.16277685!3d26.790937699999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399081a264a4c6a9%3A0x6b241c88147d32c9!2sAyodhya%2C%20Uttar%20Pradesh%20224123!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+              width="100%"
+              height="100%"
+              style="border: 0"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Google Maps Location of M S Digital Library"
+            ></iframe>
+          </div>
+
+          <div
+            class="card contact-card"
+            data-aos="fade-up"
+            data-aos-delay="120"
+          >
+            <h3>Visit / Contact</h3>
+            <p style="margin: 6px 0">
+              <strong>M S DIGITAL LIBRARY</strong><br />Near Railway Crossing,
+              Kami Ganj, Ayodhya, U.P. 224123
+            </p>
+            <p>
+              <a
+                href="tel:+919598249908"
+                style="
+                  color: var(--primary);
+                  text-decoration: none;
+                  font-weight: 700;
+                "
+                >+91 95982 49908 (Call / WhatsApp)</a
+              >
+            </p>
+            <p>
+              <a
+                href="mailto:info@msdigitallibrary.in"
+                style="color: var(--muted); text-decoration: none"
+                >info@msdigitallibrary.in</a
+              >
+            </p>
+
+            <form
+              id="enquiryForm"
+              class="form"
+              onsubmit="handleWhatsAppSubmit(event)"
+            >
+              <label for="name" class="sr-only">Name</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Your full name"
+                required
+              />
+
+              <label for="phone" class="sr-only">Phone</label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="Phone number (WhatsApp preferred)"
+                required
+                maxlength="15"
+              />
+
+              <label for="plan" class="sr-only">Plan</label>
+              <select id="plan" name="plan" required>
+                <option value="">-- Preferred plan --</option>
+                <option>Morning Session — ₹500</option>
+                <option>Afternoon Session — ₹600</option>
+                <option>Evening Session — ₹500</option>
+                <option>Dedicated 12 Hours — ₹1,000</option>
+                <option>Ultimate 24/7 — ₹1,300</option>
+              </select>
+
+              <label for="note" class="sr-only">Note</label>
+              <textarea
+                id="note"
+                name="note"
+                rows="3"
+                placeholder="Any special requests (optional)"
+              ></textarea>
+
+              <button class="btn" type="submit">Send WhatsApp Inquiry</button>
+            </form>
+
+            <p style="font-size: 0.9rem; color: var(--muted); margin-top: 12px">
+              Open 24 Hours • 100% power backup • CCTV & access control
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div style="height: 10px"></div>
+    <footer>
+      <div class="container" style="padding: 22px 0; text-align: center;">
+        <small
+          style="color: var(--muted); font-size: 0.95rem;"
+          >© 2025 M S Digital Library Ayodhya. All rights reserved. Study Smart.
+          Study at MSBL.</small
+        >
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+      AOS.init({ once: true, duration: 700 });
+
+      // Smooth in-page scrolling
+      document.querySelectorAll('a[href^="#"]').forEach((a) => {
+        a.addEventListener("click", (e) => {
+          const target = document.querySelector(a.getAttribute("href"));
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        });
+      });
+
+      // WhatsApp inquiry handler
+      function handleWhatsAppSubmit(e) {
+        e.preventDefault();
+        const name = document.getElementById("name").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+        const plan = document.getElementById("plan").value;
+        const note = document.getElementById("note").value.trim();
+
+        if (!name || !phone || !plan) {
+          alert("Please fill all required fields.");
+          return;
+        }
+
+        // Basic phone sanitization (digits only)
+        const digits = phone.replace(/[^0-9+]/g, "");
+        const message = `📚 New Inquiry from M S Digital Library\n\n👤 Name: ${name}\n📞 Phone: ${digits}\n📝 Plan: ${plan}\n📎 Note: ${
+          note || "—"
+        }\n\nPlease share availability & admission steps.`;
+
+        const phoneNumber = "919598249908"; // Target WhatsApp number
+        const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+          message
+        )}`;
+        window.open(url, "_blank");
+      }
+    </script>
+  </body>
+</html>
