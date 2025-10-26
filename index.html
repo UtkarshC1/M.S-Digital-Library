@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Poppins:wght@600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700&display=swap"
       rel="stylesheet"
     />
     <link
@@ -22,17 +22,24 @@
     />
 
     <style>
+      /* --- Enhanced CSS Variables for Design System --- */
       :root {
         --primary: #9b111e; /* Deep Red/Maroon */
+        --primary-dark: #7b0d11;
         --accent: #ffd166; /* Golden Yellow */
-        --muted: #6b6b6b;
-        --bg: #f8fafc;
+        --muted: #6b7280; /* Gray-500 for better contrast */
+        --bg: #f9fafb; /* Lighter background for depth */
         --card: #ffffff;
-        --glass-shadow: 0 6px 18px rgba(16, 24, 40, 0.06);
-        --shadow: 0 8px 30px rgba(22, 22, 22, 0.08);
+        --glass-shadow: 0 4px 12px rgba(16, 24, 40, 0.04);
+        --shadow: 0 10px 40px rgba(17, 24, 39, 0.08);
         --max-width: 1200px;
+        --radius-sm: 10px;
+        --radius-lg: 18px;
+        --header-height: 72px; /* Initial Height */
+        --header-height-scrolled: 60px; /* Reduced Height on Scroll */
       }
 
+      /* --- Global Resets & Typography --- */
       * {
         box-sizing: border-box;
       }
@@ -45,133 +52,234 @@
       body {
         font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
           "Helvetica Neue", Arial, sans-serif;
-        background: linear-gradient(180deg, #fbfdff 0%, #f6f8fb 100%);
+        background: var(--bg);
         color: #111827;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        line-height: 1.5;
+        line-height: 1.6;
         margin: 0;
-        /* Base space for fixed header */
-        padding-top: 72px;
+        padding-top: var(--header-height);
+        transition: background-color 0.5s ease;
       }
 
+      h1, h2, h3 {
+          font-family: "Poppins", sans-serif;
+          color: var(--primary-dark);
+          line-height: 1.2;
+      }
+
+      h1 { font-size: 1.5rem; }
+      h2 { font-size: 1.8rem; margin-bottom: 1rem; }
+      h3 { font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--primary); }
+
+      p.lead {
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        max-width: 700px;
+        font-size: 1.1rem;
+      }
+
+      a {
+          color: var(--primary);
+          text-decoration: none;
+          transition: color 0.3s ease;
+      }
+
+      a:hover {
+          color: var(--primary-dark);
+      }
+
+      .container {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0 1.25rem;
+      }
+
+      section {
+        padding: 4rem 0;
+        transition: background-color 0.5s ease;
+      }
+
+      /* --- Header & Navigation (Fixed & Glassmorphism) --- */
       .header {
         position: fixed;
         left: 0;
         right: 0;
         top: 0;
-        height: 72px;
+        height: var(--header-height);
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 12px 24px;
-        backdrop-filter: blur(6px) saturate(120%);
-        background: rgba(255, 255, 255, 0.85); /* Semi-transparent white */
-        box-shadow: 0 4px 18px rgba(15, 23, 42, 0.06);
+        padding: 0.75rem 1.25rem;
+        backdrop-filter: blur(8px) saturate(180%);
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 2px 10px rgba(15, 23, 42, 0.08);
         z-index: 120;
+        transition: height 0.3s ease, padding 0.3s ease;
+      }
+
+      .header.scrolled {
+        height: var(--header-height-scrolled);
+        padding: 0.5rem 1.25rem;
       }
 
       .brand {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 0.75rem;
+        transition: transform 0.3s ease;
       }
+
+      .header.scrolled .brand {
+        transform: translateY(0); /* Reset for smaller logo */
+      }
+
+      .brand-title-line-2 {
+         /* Hide secondary text on scroll */
+        transition: opacity 0.3s ease;
+      }
+
+      .header.scrolled .brand-title-line-2 {
+          opacity: 0;
+      }
+
 
       .logo-mark {
         width: 44px;
         height: 44px;
-        border-radius: 10px;
-        background: linear-gradient(135deg, var(--primary), #7b0d11);
+        border-radius: var(--radius-sm);
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
         font-weight: 700;
         font-family: Poppins;
-      }
-
-      .brand h1 {
-        font-size: 1rem;
-        margin: 0;
-        color: var(--primary);
-        font-family: Poppins;
-      }
-
-      nav a {
-        /* Only one CTA in nav, keeping it clean */
-        color: var(--muted);
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 0.95rem;
-      }
-
-      .btn {
-        display: inline-block;
-        background: var(--accent);
-        color: var(--primary);
-        font-weight: 700;
-        padding: 10px 16px;
-        border-radius: 10px;
-        text-decoration: none;
-        text-align: center;
+        font-size: 1.25rem;
         transition: all 0.3s ease;
       }
 
-      .btn:hover {
+      .header.scrolled .logo-mark {
+          width: 38px;
+          height: 38px;
+          font-size: 1rem;
+      }
+
+      .brand h1 {
+        font-size: 1.1rem;
+        margin: 0;
+        color: var(--primary);
+      }
+
+      /* --- Buttons (CTAs) --- */
+      .btn {
+        position: relative;
+        overflow: hidden;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--accent);
+        color: var(--primary-dark);
+        font-weight: 700;
+        padding: 0.75rem 1.25rem;
+        border-radius: var(--radius-sm);
+        text-decoration: none;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        border: 2px solid transparent;
+        cursor: pointer;
+        line-height: 1;
+        z-index: 1; /* For ripple effect */
+      }
+
+      /* Glowing Button Effect */
+      .btn:before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: conic-gradient(
+          transparent,
+          rgba(255, 209, 102, 0.6),
+          transparent
+        );
+        z-index: -1;
+        transition: transform 0.5s ease;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .btn:hover, .btn:focus {
         filter: brightness(0.9);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn:hover:before {
+        transform: rotate(180deg);
+        opacity: 1;
+      }
+
+      /* Ripple Effect Base */
+      .ripple {
+        position: absolute;
+        border-radius: 50%;
+        transform: scale(0);
+        animation: ripple-effect 0.6s linear;
+        background-color: rgba(155, 17, 30, 0.3);
+        pointer-events: none;
+      }
+
+      @keyframes ripple-effect {
+        to {
+          transform: scale(4);
+          opacity: 0;
+        }
       }
 
       .btn.secondary {
         background: transparent;
         color: var(--primary);
-        border: 1.5px solid rgba(155, 17, 30, 0.08);
+        border: 2px solid rgba(155, 17, 30, 0.12);
+        box-shadow: none;
       }
 
-      /* *** FIX FOR NAV/HERO SPACE AFTER AOS ANIMATION *** */
+      .btn.secondary:hover, .btn.secondary:focus {
+          background: rgba(155, 17, 30, 0.05);
+          transform: translateY(-1px);
+          box-shadow: none;
+      }
+
+      /* --- Hero Section --- */
       .hero {
         max-width: var(--max-width);
         margin: 0 auto;
-        /* Increased top padding from 80px to 100px for a definite gap below the fixed nav */
-        padding: 100px 20px 40px; 
+        padding: 3rem 1.25rem 2.5rem;
         display: grid;
         grid-template-columns: 1fr;
-        gap: 24px;
+        gap: 2rem;
         align-items: center;
+        position: relative; /* For scroll indicator */
       }
-      
-      .hero-image-wrapper {
-        border-radius: 16px;
-        overflow: hidden;
-        box-shadow: var(--shadow);
-      }
-
-      .hero-image-wrapper img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-        min-height: 280px; /* Optimized height for mobile */
-      }
-
 
       .hero-inner {
-        background: linear-gradient(
-          180deg,
-          rgba(155, 17, 30, 0.06),
-          rgba(255, 209, 102, 0.03)
-        );
-        padding: 36px;
-        border-radius: 20px;
+        padding: 1.5rem;
+        border-radius: var(--radius-lg);
         box-shadow: var(--shadow);
         display: flex;
         flex-direction: column;
-        gap: 18px;
+        gap: 1.5rem;
+        background: linear-gradient(
+          180deg,
+          rgba(155, 17, 30, 0.06) 0%,
+          rgba(255, 209, 102, 0.03) 100%
+        );
+        border: 1px solid rgba(155, 17, 30, 0.1);
       }
 
       .headline {
-        font-family: Poppins;
-        font-size: 2rem;
-        color: var(--primary);
+        font-size: 2.25rem;
         margin: 0;
       }
 
@@ -179,145 +287,331 @@
         color: var(--muted);
         margin: 0;
         font-weight: 500;
+        font-size: 1.1rem;
       }
 
       .hero-cta {
         display: flex;
-        gap: 12px;
+        gap: 0.75rem;
         align-items: center;
         flex-wrap: wrap;
       }
 
+      .hero-image-wrapper {
+        position: relative;
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        border: 1px solid rgba(17, 24, 39, 0.05);
+        will-change: transform;
+      }
+
+      .hero-image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        min-height: 300px;
+        transition: transform 1s ease;
+      }
+
+      .hero-image-wrapper:hover img {
+          transform: scale(1.05) rotateZ(1deg);
+      }
+
+      /* Animated Scroll Down Indicator */
+      .scroll-indicator {
+          position: absolute;
+          bottom: 1.5rem;
+          left: 50%;
+          transform: translateX(-50%);
+          display: block;
+          width: 24px;
+          height: 40px;
+          border: 2px solid var(--primary);
+          border-radius: 12px;
+          opacity: 0.8;
+          z-index: 10;
+      }
+
+      .scroll-indicator::before {
+          content: '';
+          position: absolute;
+          top: 8px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 4px;
+          height: 4px;
+          background: var(--primary);
+          border-radius: 50%;
+          animation: scroll-bob 1.5s infinite;
+      }
+
+      @keyframes scroll-bob {
+          0%, 100% { transform: translate(-50%, 0); opacity: 1; }
+          50% { transform: translate(-50%, 8px); opacity: 0; }
+      }
+
+      /* --- Badges & Video CTA --- */
       .badges {
         display: flex;
-        gap: 12px;
+        gap: 0.75rem;
         flex-wrap: wrap;
+        padding-top: 0.5rem;
       }
 
       .badge {
         background: var(--card);
-        padding: 8px 12px;
-        border-radius: 12px;
+        padding: 0.6rem 0.9rem;
+        border-radius: var(--radius-sm);
         box-shadow: var(--glass-shadow);
         font-weight: 600;
         color: var(--muted);
         display: flex;
-        gap: 10px;
+        gap: 8px;
         align-items: center;
-        font-size: 0.85rem; /* Optimized size for mobile */
+        font-size: 0.875rem;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
       }
-      
-      /* Special styling for the Video Tour button badge */
+
       .badge.video-tour {
-        background: #f72c44; /* Bright/Vibrant Color for CTA */
+        background: #e62e49;
         color: white;
-        box-shadow: var(--shadow);
+        box-shadow: 0 6px 15px rgba(230, 46, 73, 0.4);
         font-weight: 700;
         cursor: pointer;
-        transition: transform 0.2s ease;
-        order: -1; /* Make it appear first on mobile */
+        order: -1;
       }
-      
+
       .badge.video-tour:hover {
-          transform: scale(1.03);
+          transform: scale(1.05) rotateZ(-1deg); /* Bounce/scale effect */
+          box-shadow: 0 8px 20px rgba(230, 46, 73, 0.5);
       }
 
-      .container {
-        max-width: var(--max-width);
-        margin: 0 auto;
-        padding: 0 20px;
-      }
-
-      section {
-        padding: 48px 0;
-      }
-
-      h2 {
-        font-family: Poppins;
-        color: var(--primary);
-        font-size: 1.6rem;
-        margin-bottom: 12px;
-      }
-
-      p.lead {
-        color: var(--muted);
-        margin-bottom: 18px;
-        max-width: 700px;
-      }
-
+      /* --- Cards & Grid Layout --- */
       .grid {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 18px;
+        gap: 1.5rem;
       }
 
       .card {
         background: var(--card);
-        border-radius: 14px;
-        padding: 22px;
+        border-radius: var(--radius-lg);
+        padding: 1.5rem;
         box-shadow: var(--glass-shadow);
-        transition: transform 0.28s ease, box-shadow 0.28s ease;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid rgba(0, 0, 0, 0.05);
       }
 
       .card:hover {
-        transform: translateY(-4px); /* Slightly less intense hover */
-        box-shadow: 0 14px 30px rgba(16, 24, 40, 0.08);
+        transform: translateY(-8px); /* 3D Lift */
+        box-shadow: 0 18px 40px rgba(16, 24, 40, 0.12); /* Intensify shadow */
       }
 
-      .gallery {
-        display: flex;
-        gap: 12px;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        padding-bottom: 8px;
+      /* --- Slideshow Styles (NEW: Replacing old .gallery) --- */
+
+      .slideshow-container {
+          position: relative;
+          max-width: 100%;
+          margin: 0 auto;
+          /* Glassmorphism Styling */
+          background: rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(10px);
+          border-radius: var(--radius-lg);
+          overflow: hidden;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+          height: 280px; /* Fixed height for mobile */
+          display: block;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          user-select: none;
+          touch-action: pan-y; /* Improves mobile touch experience */
+      }
+      @media (min-width: 600px) {
+          .slideshow-container {
+              height: 400px; /* Taller on desktop */
+          }
       }
 
-      .gallery img {
-        flex: 0 0 80%;
-        max-width: 80%;
-        scroll-snap-align: start; /* Snap to start for easier viewing */
-        border-radius: 12px;
-        height: 220px;
-        object-fit: cover;
+      .slide {
+          display: none;
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
       }
 
+      .slide img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover; /* Cover container while maintaining aspect ratio */
+          display: block;
+          transition: none;
+      }
+
+      /* Navigation buttons (Prev/Next) */
+      .prev, .next {
+          cursor: pointer;
+          position: absolute;
+          top: 50%;
+          width: auto;
+          padding: 1rem 0.5rem;
+          color: white;
+          font-weight: bold;
+          font-size: 1.5rem;
+          transition: 0.6s ease;
+          border-radius: 0 3px 3px 0;
+          user-select: none;
+          background-color: rgba(0, 0, 0, 0.4);
+          transform: translateY(-50%);
+          z-index: 10;
+          line-height: 1;
+      }
+
+      .prev:hover, .next:hover {
+          background-color: rgba(0, 0, 0, 0.8);
+      }
+
+      .next {
+          right: 0;
+          border-radius: 3px 0 0 3px;
+      }
+
+      .prev {
+          left: 0;
+      }
+
+      /* Dots/Indicators */
+      .dots-container {
+          text-align: center;
+          position: absolute;
+          bottom: 10px;
+          width: 100%;
+          z-index: 10;
+      }
+
+      .dot {
+          cursor: pointer;
+          height: 12px;
+          width: 12px;
+          margin: 0 4px;
+          background-color: #bbb;
+          border-radius: 50%;
+          display: inline-block;
+          transition: background-color 0.6s ease;
+          border: 2px solid white;
+      }
+
+      .active, .dot:hover {
+          background-color: var(--primary);
+      }
+
+      /* Fade Animation */
+      .fade {
+          animation-name: fadeEffect;
+          animation-duration: 1.5s;
+      }
+
+      @keyframes fadeEffect {
+          from { opacity: 0.4 } 
+          to { opacity: 1 }
+      }
+
+      /* --- Pricing Grid (Scrollable & Enhanced) --- */
       .pricing-grid {
         display: flex;
-        gap: 16px;
+        gap: 1rem;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
-        padding-bottom: 12px;
+        padding-bottom: 1rem;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .pricing-grid::-webkit-scrollbar {
+        height: 6px;
+      }
+      .pricing-grid::-webkit-scrollbar-thumb {
+        background: rgba(155, 17, 30, 0.4);
+        border-radius: 3px;
       }
 
       .plan {
-        flex: 0 0 85%;
-        max-width: 85%;
+        flex: 0 0 90%;
+        max-width: 90%;
         background: white;
-        padding: 18px;
-        border-radius: 14px;
+        padding: 1.5rem;
+        border-radius: var(--radius-lg);
         box-shadow: var(--glass-shadow);
-        border-top: 6px solid transparent;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        border-top: 4px solid transparent;
         scroll-snap-align: start;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
       }
 
+      .plan:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 10px 25px rgba(16, 24, 40, 0.1);
+      }
+
+      /* Recommended Plan with Glowing Border */
       .plan.recommended {
-        border-top-color: var(--primary); /* Use primary color for main plan */
-        box-shadow: 0 24px 50px rgba(16, 24, 40, 0.08);
+        position: relative;
+        overflow: hidden;
+        border-top-color: var(--primary);
+        box-shadow: 0 12px 30px rgba(16, 24, 40, 0.1);
         background: linear-gradient(
           180deg,
           #fff 0%,
-          rgba(155, 17, 30, 0.02) 100%
+          rgba(155, 17, 30, 0.03) 100%
         );
       }
 
+      /* Glowing Border Effect for Recommended Plan */
+      .plan.recommended::before {
+          content: "";
+          position: absolute;
+          top: -2px;
+          left: -2px;
+          right: -2px;
+          bottom: -2px;
+          border-radius: var(--radius-lg);
+          background: conic-gradient(
+            from 0deg,
+            var(--accent),
+            var(--primary),
+            var(--accent)
+          );
+          z-index: 0;
+          opacity: 0;
+          transition: opacity 0.5s ease;
+      }
+
+      .plan.recommended:hover::before {
+          opacity: 0.4;
+          animation: border-spin 3s linear infinite;
+      }
+
+      .plan.recommended > * {
+          position: relative;
+          z-index: 1;
+      }
+
+      @keyframes border-spin {
+          to { transform: rotate(1turn); }
+      }
+
       .price {
-        font-size: 1.8rem; /* Slightly larger price */
+        font-size: 2rem;
         font-weight: 800;
-        color: var(--primary);
+        color: var(--primary-dark);
+        margin-top: 0.5rem;
+        margin-bottom: 1rem;
       }
 
       .features {
-        margin: 10px 0 14px 0;
+        margin: 0;
         color: var(--muted);
         list-style: none;
         padding: 0;
@@ -325,33 +619,108 @@
       }
 
       .features li {
-        padding: 6px 0;
-        border-bottom: 1px dashed rgba(0, 0, 0, 0.05); /* Light dashed separator */
+        padding: 0.5rem 0;
+        border-bottom: 1px dashed rgba(0, 0, 0, 0.08);
       }
 
+      .features li:last-child {
+          border-bottom: none;
+          padding-bottom: 0;
+      }
+
+      .plan .btn {
+          margin-top: 1rem;
+          width: 100%;
+      }
+
+      /* --- Contact Section & Form --- */
       .contact-grid {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 18px;
+        gap: 1.5rem;
       }
 
       .map {
-        height: 360px; /* Slightly taller map */
-        border-radius: 12px;
+        height: 380px;
+        border-radius: var(--radius-lg);
         overflow: hidden;
+      }
+
+      .contact-card {
+          padding: 1.5rem;
+      }
+
+      .form label {
+          display: block;
+          font-weight: 500;
+          color: #374151;
+          margin-top: 1rem;
+          margin-bottom: 0.25rem;
+          font-size: 0.95rem;
       }
 
       .form input,
       .form select,
       .form textarea {
         width: 100%;
-        padding: 12px;
-        border-radius: 10px;
-        border: 1px solid #e6e9ee;
-        margin-top: 10px;
-        font-size: 0.95rem;
+        padding: 0.75rem;
+        border-radius: var(--radius-sm);
+        border: 1px solid #d1d5db;
+        transition: border-color 0.2s, box-shadow 0.2s;
+        font-size: 1rem;
+        font-family: inherit;
       }
 
+      /* Input Focus Animation */
+      .form input:focus,
+      .form select:focus,
+      .form textarea:focus {
+          border-color: var(--primary);
+          box-shadow: 0 0 0 3px rgba(155, 17, 30, 0.3); /* Stronger shadow glow */
+          outline: none;
+      }
+
+      .form button[type="submit"] {
+          margin-top: 1.5rem;
+          width: 100%;
+          font-size: 1.1rem;
+      }
+
+      /* --- Mobile Sticky CTA Button (Floating) --- */
+      .sticky-cta {
+          position: fixed;
+          bottom: 15px;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 100;
+          width: calc(100% - 2.5rem);
+          max-width: 300px;
+          background: var(--primary);
+          color: white;
+          padding: 1rem 1.5rem;
+          border-radius: 50px;
+          font-weight: 700;
+          text-align: center;
+          box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+          opacity: 0;
+          visibility: hidden;
+          transition: opacity 0.3s ease, visibility 0.3s ease;
+          display: block; /* Ensure visibility */
+          animation: pulse 2s infinite;
+      }
+
+      .sticky-cta.visible {
+          opacity: 1;
+          visibility: visible;
+      }
+
+      @keyframes pulse {
+          0% { box-shadow: 0 0 0 0 rgba(155, 17, 30, 0.7); }
+          70% { box-shadow: 0 0 0 10px rgba(155, 17, 30, 0); }
+          100% { box-shadow: 0 0 0 0 rgba(155, 17, 30, 0); }
+      }
+
+      /* A11y: Screen Reader Only */
       .sr-only {
         position: absolute;
         width: 1px;
@@ -364,70 +733,127 @@
         border: 0;
       }
 
+      /* --- Footer --- */
+      footer {
+          border-top: 1px solid rgba(0, 0, 0, 0.05);
+          padding: 1.5rem 0;
+          background: var(--card);
+      }
+
+      /* --- Media Queries (Mobile First) --- */
+
+      /* Tablet (min-width: 600px) */
       @media (min-width: 600px) {
+        h2 { font-size: 2rem; }
         .hero {
-          grid-template-columns: 1fr 1fr;
-          padding: 48px 20px 60px; /* Desktop spacing */
-        }
-        
-        .hero-image-wrapper img {
-          min-height: 380px; /* Restore desktop height */
+          grid-template-columns: 1fr 1.2fr;
+          padding: 4rem 1.25rem 4rem;
         }
 
+        .hero-image-wrapper {
+            order: 2;
+        }
+
+        .hero-inner {
+            order: 1;
+            padding: 2.5rem;
+        }
+
+        .headline { font-size: 2.5rem; }
+
+        .sticky-cta {
+            /* Hide on tablet and larger screens */
+            display: none;
+        }
+
+        /* Slide on tablet/desktop */
         .plan {
-          flex: 1;
-          max-width: none;
-        }
-
-        .gallery img {
-          flex: 1;
-          max-width: 33%;
-        }
-        
-        .badge {
-          padding: 10px 14px; /* Restore desktop size */
-          font-size: 0.9rem;
-          order: initial; /* Restore normal order on desktop */
+          flex: 0 0 45%;
+          max-width: 45%;
         }
       }
 
+      /* Desktop (min-width: 900px) */
       @media (min-width: 900px) {
+        h2 { font-size: 2.5rem; }
+        .hero {
+            grid-template-columns: 1fr 1fr;
+        }
+
         .grid {
           grid-template-columns: repeat(3, 1fr);
         }
 
         .contact-grid {
-          grid-template-columns: 1fr 420px;
+          grid-template-columns: 1fr 400px;
         }
-      }
+        
+        /* Full-width plans on large screens, removing scroll */
+        .pricing-grid {
+            flex-wrap: wrap;
+            overflow-x: hidden;
+        }
 
-      /* Focus styling for accessibility */
-      :focus {
-        outline: 3px solid rgba(155, 17, 30, 0.18);
-        outline-offset: 3px;
+        .plan {
+          flex: 1;
+          max-width: calc(33.333% - 0.75rem);
+        }
+
+        .plan:nth-child(4) {
+            max-width: calc(50% - 0.5rem);
+        }
+
+        .plan:nth-child(5) {
+            max-width: calc(50% - 0.5rem);
+        }
+
+        .pricing-grid > div:nth-child(4) {
+            margin-top: 1rem;
+        }
+
+        .pricing-grid > div:nth-child(4):nth-child(4) {
+             margin-left: auto;
+        }
+
+        .pricing-grid > div:nth-child(5):nth-child(5) {
+             margin-right: auto;
+        }
       }
     </style>
   </head>
 
   <body>
+    <a href="#contact" class="sticky-cta">Book a Visit Now</a>
+
     <header class="header container" role="banner">
       <div class="brand">
         <div class="logo-mark">MS</div>
         <div>
           <h1>M S Digital Library</h1>
-          <div style="font-size: 0.8rem; color: var(--muted); margin-top: 2px">
+          <div class="brand-title-line-2" style="font-size: 0.8rem; color: var(--muted); margin-top: 2px">
             Ayodhya — 24/7 Study Hall
           </div>
         </div>
       </div>
 
       <nav aria-label="Primary navigation">
-        <a class="btn" href="#contact">Book a Visit</a>
+        <a class="btn" href="#contact" data-aos="fade-down" data-aos-delay="300">Book a Visit</a>
       </nav>
     </header>
 
     <main>
       <section class="hero container" aria-labelledby="hero-title">
+        <div class="hero-image-wrapper" data-aos="fade-left">
+          <picture>
+            <source srcset="placeholder_hero.webp" type="image/webp" />
+            <img
+              src="placeholder_hero.jpg"
+              alt="Study cabin interior with desk and task lamp"
+              loading="lazy"
+            />
+          </picture>
+        </div>
+
         <div class="hero-inner" data-aos="fade-up">
           <div>
             <h2 id="hero-title" class="headline">
@@ -444,26 +870,23 @@
             <a class="btn secondary" href="#contact">Book a Visit</a>
           </div>
 
-          <div class="badges" aria-hidden="false">
-            <div class="badge video-tour" onclick="handleVideoTourClick()">
+          <div class="badges" role="list">
+            <div
+              class="badge video-tour"
+              role="button"
+              tabindex="0"
+              onclick="handleVideoTourClick()"
+              onkeydown="if(event.key === 'Enter' || event.key === ' ') handleVideoTourClick()"
+            >
               ▶️ YouTube Tour
             </div>
-            <div class="badge">📶 High-Speed Fiber</div>
-            <div class="badge">🔒 24/7 Security</div>
-            <div class="badge">❄️ A/C Comfort</div>
-            <div class="badge">⚡ 100% Power Backup</div>
+            <div class="badge" role="listitem">📶 High-Speed Fiber</div>
+            <div class="badge" role="listitem">🔒 24/7 Security</div>
+            <div class="badge" role="listitem">❄️ A/C Comfort</div>
+            <div class="badge" role="listitem">⚡ 100% Power Backup</div>
           </div>
         </div>
-
-        <div class="hero-image-wrapper" data-aos="fade-left">
-          <picture>
-            <source srcset="placeholder_hero.webp" type="image/webp" />
-            <img
-              src="placeholder_hero.jpg"
-              alt="Study cabin interior with desk and task lamp"
-            />
-          </picture>
-        </div>
+        <div class="scroll-indicator" aria-hidden="true"></div>
       </section>
 
       <section
@@ -512,29 +935,32 @@
         <h2 id="facilities-title">Designed for Success</h2>
         <p class="lead">Amenities curated for comfort and focus.</p>
 
-        <div class="gallery" role="list">
-          <img
-            loading="lazy"
-            src="placeholder_study.jpg"
-            alt="Individual study cabin"
-            role="listitem"
-          />
-          <img
-            loading="lazy"
-            src="placeholder_cafe.jpg"
-            alt="Cafe and vending area"
-            role="listitem"
-          />
-          <img
-            loading="lazy"
-            src="placeholder_wifi.jpg"
-            alt="High speed wifi and router room"
-            role="listitem"
-          />
-        </div>
+        <div class="slideshow-container" data-aos="fade-up">
+            <div class="slide fade">
+                <img src="placeholder_study.jpg" alt="Individual study cabin" loading="lazy" />
+            </div>
+            <div class="slide fade">
+                <img src="placeholder_cafe.jpg" alt="Cafe and vending area" loading="lazy" />
+            </div>
+            <div class="slide fade">
+                <img src="placeholder_wifi.jpg" alt="High speed wifi and router room" loading="lazy" />
+            </div>
+            <div class="slide fade">
+                <img src="placeholder_desk.jpg" alt="Clean, organized study desk with lamp" loading="lazy" />
+            </div>
 
-        <div style="margin-top: 18px" data-aos="fade-up">
-          <ul style="color: var(--muted); list-style: disc; padding-left: 20px">
+            <a class="prev" aria-label="Previous Slide" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" aria-label="Next Slide" onclick="plusSlides(1)">&#10095;</a>
+
+            <div class="dots-container" aria-label="Slideshow Indicators">
+                <span class="dot" role="button" aria-label="Go to slide 1" onclick="currentSlide(1)"></span>
+                <span class="dot" role="button" aria-label="Go to slide 2" onclick="currentSlide(2)"></span>
+                <span class="dot" role="button" aria-label="Go to slide 3" onclick="currentSlide(3)"></span>
+                <span class="dot" role="button" aria-label="Go to slide 4" onclick="currentSlide(4)"></span>
+            </div>
+        </div>
+        <div style="margin-top: 1.5rem" data-aos="fade-up">
+          <ul class="features" style="list-style: disc; padding-left: 1.25rem;">
             <li>
               <strong>Dedicated fiber connection</strong> — stable video
               lectures & downloads.
@@ -562,7 +988,7 @@
           for busy months.
         </p>
 
-        <div class="pricing-grid" data-aos="fade-up">
+        <div class="pricing-grid" role="region" aria-label="Pricing Plans">
           <div class="plan" data-aos="zoom-in">
             <h3>Morning Session</h3>
             <div class="price">
@@ -644,7 +1070,7 @@
           </div>
         </div>
 
-        <p style="color: var(--primary); margin-top: 18px; font-weight: 600">
+        <p style="color: var(--primary-dark); margin-top: 1.5rem; font-weight: 600">
           Note: One-time admission fee ₹100 + seat reserve ₹100 apply on new
           enrollments.
         </p>
@@ -658,7 +1084,12 @@
         </p>
 
         <div class="contact-grid">
-          <div class="map card map" data-aos="fade-up">
+          <div
+            class="map card"
+            data-aos="fade-up"
+            role="region"
+            aria-label="M S Digital Library Location Map"
+          >
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3561.6800983265807!2d82.20336929999999!3d26.786465399999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399a07ce486665bf%3A0x7ccc6dbf41173b18!2sM.S.%20Digital%20Library!5e0!3m2!1sen!2sin!4v1761494349033!5m2!1sen!2sin"
               width="100%"
@@ -677,10 +1108,10 @@
             data-aos-delay="120"
           >
             <h3>Visit / Contact</h3>
-            <p style="margin: 6px 0">
-              <strong>M S DIGITAL LIBRARY</strong><br />Near Railway Crossing,
+            <address style="margin: 0.75rem 0; font-style: normal;">
+              <strong style="color: var(--primary-dark)">M S DIGITAL LIBRARY</strong><br />Near Railway Crossing,
               Kami Ganj, Ayodhya, U.P. 224123
-            </p>
+            </address>
             <p>
               <a
                 href="tel:+919598249908"
@@ -688,6 +1119,7 @@
                   color: var(--primary);
                   text-decoration: none;
                   font-weight: 700;
+                  display: block;
                 "
                 >+91 95982 49908 (Call / WhatsApp)</a
               >
@@ -704,29 +1136,32 @@
               id="enquiryForm"
               class="form"
               onsubmit="handleWhatsAppSubmit(event)"
+              aria-label="Enquiry Form"
             >
-              <label for="name" class="sr-only">Name</label>
+              <label for="name">Your Full Name</label>
               <input
                 type="text"
                 id="name"
                 name="name"
-                placeholder="Your full name"
+                placeholder="e.g. Rahul Sharma"
                 required
               />
 
-              <label for="phone" class="sr-only">Phone</label>
+              <label for="phone">Phone Number (WhatsApp preferred)</label>
               <input
                 type="tel"
                 id="phone"
                 name="phone"
-                placeholder="Phone number (WhatsApp preferred)"
+                placeholder="e.g. 95982 49908"
                 required
                 maxlength="15"
+                pattern="[0-9+ ]{8,15}"
+                title="Enter a valid phone number, 8 to 15 digits or standard format"
               />
 
-              <label for="plan" class="sr-only">Plan</label>
+              <label for="plan">Preferred Plan</label>
               <select id="plan" name="plan" required>
-                <option value="">-- Preferred plan --</option>
+                <option value="">-- Select a plan --</option>
                 <option>Morning Session — ₹500</option>
                 <option>Afternoon Session — ₹600</option>
                 <option>Evening Session — ₹500</option>
@@ -734,18 +1169,18 @@
                 <option>Ultimate 24/7 — ₹1,300</option>
               </select>
 
-              <label for="note" class="sr-only">Note</label>
+              <label for="note">Any Special Requests (Optional)</label>
               <textarea
                 id="note"
                 name="note"
                 rows="3"
-                placeholder="Any special requests (optional)"
+                placeholder="e.g. Need a visit on Saturday at 4 PM"
               ></textarea>
 
               <button class="btn" type="submit">Send WhatsApp Inquiry</button>
             </form>
 
-            <p style="font-size: 0.9rem; color: var(--muted); margin-top: 12px">
+            <p style="font-size: 0.9rem; color: var(--muted); margin-top: 1rem">
               Open 24 Hours • 100% power backup • CCTV & access control
             </p>
           </div>
@@ -753,11 +1188,10 @@
       </section>
     </main>
 
-    <div style="height: 10px"></div>
     <footer>
-      <div class="container" style="padding: 22px 0; text-align: center;">
+      <div class="container" style="text-align: center;">
         <small
-          style="color: var(--muted); font-size: 0.95rem;"
+          style="color: var(--muted); font-size: 0.9rem;"
           >© 2025 M S Digital Library Ayodhya. All rights reserved. Study Smart.
           Study at MSBL.</small
         >
@@ -765,51 +1199,230 @@
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <script>
-      AOS.init({ once: true, duration: 700 });
 
-      // Smooth in-page scrolling
+    <script>
+      // --- Core Initialization ---
+      AOS.init({ once: true, duration: 800, easing: 'ease-out-cubic' });
+
+      // Get key elements
+      const header = document.querySelector('.header');
+      const stickyCta = document.querySelector('.sticky-cta');
+      const sections = document.querySelectorAll('section');
+      const body = document.body;
+      const heroImageWrapper = document.querySelector('.hero-image-wrapper');
+      
+      // Section Background Colors for Visual Separation
+      const sectionColors = {
+          hero: 'var(--bg)',
+          advantage: 'var(--card)',
+          facilities: 'var(--bg)',
+          pricing: 'var(--card)',
+          contact: 'var(--bg)'
+      };
+
+      // --- Utility Functions ---
+
+      // 1. Smooth Scroll with Offset
       document.querySelectorAll('a[href^="#"]').forEach((a) => {
         a.addEventListener("click", (e) => {
-          const target = document.querySelector(a.getAttribute("href"));
+          const href = a.getAttribute("href");
+          if (href === "#" || href === "") return;
+          const target = document.querySelector(href);
           if (target) {
             e.preventDefault();
-            target.scrollIntoView({ behavior: "smooth", block: "start" });
+            const offset = header.offsetHeight + 10;
+            const targetPosition = target.offsetTop - offset;
+            window.scrollTo({
+              top: targetPosition,
+              behavior: "smooth",
+            });
           }
         });
       });
 
-      // Video Tour Handler - Updated with the new YouTube URL
-      function handleVideoTourClick() {
-        const videoUrl = "https://youtu.be/GJUg8K_Nqmw?si=-NaEjcmIoq1nNqQP";
-        window.open(videoUrl, "_blank");
+      // 2. Button Ripple Effect
+      document.querySelectorAll('.btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          const rect = this.getBoundingClientRect();
+          const size = Math.max(rect.width, rect.height);
+          const x = e.clientX - rect.left - size / 2;
+          const y = e.clientY - rect.top - size / 2;
+
+          // Create the ripple element
+          const ripple = document.createElement('span');
+          ripple.classList.add('ripple');
+          ripple.style.width = ripple.style.height = `${size}px`;
+          ripple.style.left = `${x}px`;
+          ripple.style.top = `${y}px`;
+
+          this.appendChild(ripple);
+
+          // Remove the ripple after the animation
+          ripple.addEventListener('animationend', () => {
+            ripple.remove();
+          });
+        });
+      });
+
+      // 3. Header Shrink, Sticky CTA Visibility, and Parallax on Scroll
+      function handleScroll() {
+        const scrollPosition = window.scrollY;
+        const totalHeight = document.body.scrollHeight;
+        const viewportHeight = window.innerHeight;
+
+        // Header Shrink Effect
+        if (scrollPosition > 50) {
+          header.classList.add('scrolled');
+          body.style.paddingTop = 'var(--header-height-scrolled)';
+        } else {
+          header.classList.remove('scrolled');
+          body.style.paddingTop = 'var(--header-height)';
+        }
+
+        // Sticky CTA Visibility Logic (Mobile Only)
+        if (window.innerWidth < 600) {
+            const isScrollingPastHero = scrollPosition > 400;
+            const isScrollingNearBottom = (scrollPosition + viewportHeight) > (totalHeight - 150);
+
+            if (isScrollingPastHero && !isScrollingNearBottom) {
+                stickyCta.classList.add('visible');
+            } else {
+                stickyCta.classList.remove('visible');
+            }
+        }
+
+        // Parallax Effect for Hero Image
+        if (heroImageWrapper && scrollPosition < viewportHeight) {
+            const parallaxRate = 0.2; 
+            const offset = scrollPosition * parallaxRate;
+            heroImageWrapper.style.transform = `translateY(${offset}px)`;
+        } else if (heroImageWrapper) {
+            heroImageWrapper.style.transform = `translateY(0px)`;
+        }
+
+
+        // Scroll-Triggered Background Color Changes
+        let currentSectionColor = sectionColors.hero;
+        sections.forEach(section => {
+            const rect = section.getBoundingClientRect();
+            // Check if section is visible in the viewport's top half
+            if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+                currentSectionColor = sectionColors[section.id] || 'var(--bg)';
+            }
+        });
+        body.style.backgroundColor = currentSectionColor;
       }
 
-      // WhatsApp inquiry handler
+      window.addEventListener('scroll', handleScroll);
+      window.addEventListener('load', handleScroll);
+      window.addEventListener('resize', handleScroll); 
+
+      // 4. Video Tour Handler
+      function handleVideoTourClick() {
+        const videoUrl = "https://youtu.be/GJUg8K_Nqmw?si=-NaEjcmIoq1nNqQP";
+        window.open(videoUrl, "_blank", "noopener,noreferrer");
+      }
+
+      
+      // 5. WhatsApp inquiry handler with basic format/validation
       function handleWhatsAppSubmit(e) {
         e.preventDefault();
-        const name = document.getElementById("name").value.trim();
-        const phone = document.getElementById("phone").value.trim();
-        const plan = document.getElementById("plan").value;
-        const note = document.getElementById("note").value.trim();
+        const form = e.target;
+        const name = form.elements.name.value.trim();
+        const phone = form.elements.phone.value.trim();
+        const plan = form.elements.plan.value;
+        const note = form.elements.note.value.trim() || "—";
 
-        if (!name || !phone || !plan) {
-          alert("Please fill all required fields.");
+        if (!name || !phone || !plan || plan === "") {
+          alert("Please fill in your Name, Phone Number, and Preferred Plan.");
           return;
         }
 
-        // Basic phone sanitization (digits only)
+        // Phone sanitization (digits only + optional '+' for international)
         const digits = phone.replace(/[^0-9+]/g, "");
-        const message = `📚 New Inquiry from M S Digital Library\n\n👤 Name: ${name}\n📞 Phone: ${digits}\n📝 Plan: ${plan}\n📎 Note: ${
-          note || "—"
-        }\n\nPlease share availability & admission steps.`;
+
+        // Construct clear, multi-line WhatsApp message
+        const message = `📚 New Inquiry from M S Digital Library\n\n👤 Name: ${name}\n📞 Phone: ${digits}\n📝 Plan: ${plan}\n📎 Note: ${note}\n\n*Please share availability and admission steps.*`;
 
         const phoneNumber = "919598249908"; // Target WhatsApp number
         const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
           message
         )}`;
-        window.open(url, "_blank");
+
+        window.open(url, "_blank", "noopener,noreferrer");
+
+        // Clear form after submission for better UX
+        form.reset();
       }
+
+      // 6. NEW: Slideshow/Carousel Logic 
+      let slideIndex = 1;
+      let slideTimeout; // For auto-cycling control
+
+      function setupSlideshow() {
+          const slideshowContainer = document.querySelector('.slideshow-container');
+          if (!slideshowContainer) return;
+
+          // Pause on hover
+          slideshowContainer.addEventListener('mouseenter', () => clearTimeout(slideTimeout));
+          slideshowContainer.addEventListener('mouseleave', () => autoShowSlides());
+
+          showSlides(slideIndex);
+          autoShowSlides(); // Start auto-cycling
+      }
+
+      function plusSlides(n) {
+          showSlides(slideIndex += n);
+          // When manually navigating, reset the auto-cycle timer
+          clearTimeout(slideTimeout);
+          autoShowSlides();
+      }
+
+      function currentSlide(n) {
+          showSlides(slideIndex = n);
+          clearTimeout(slideTimeout);
+          autoShowSlides();
+      }
+
+      function showSlides(n) {
+          let i;
+          let slides = document.getElementsByClassName("slide");
+          let dots = document.getElementsByClassName("dot");
+
+          // Stop if no slides are present
+          if (slides.length === 0) return;
+
+          // Wrap around logic
+          if (n > slides.length) { slideIndex = 1 }
+          if (n < 1) { slideIndex = slides.length }
+
+          // Hide all slides
+          for (i = 0; i < slides.length; i++) {
+              slides[i].style.display = "none";
+          }
+
+          // Remove active class from all dots
+          for (i = 0; i < dots.length; i++) {
+              dots[i].className = dots[i].className.replace(" active", "");
+          }
+
+          // Display the current slide and mark the current dot as active
+          slides[slideIndex - 1].style.display = "block";
+          dots[slideIndex - 1].className += " active";
+      }
+
+      // Auto-cycle function
+      function autoShowSlides() {
+          let slides = document.getElementsByClassName("slide");
+          if (slides.length === 0) return;
+
+          slideTimeout = setTimeout(() => {
+              plusSlides(1);
+          }, 4000); // Change image every 4 seconds
+      }
+
+      // Start the slideshow once the page is fully loaded
+      window.addEventListener('load', setupSlideshow);
     </script>
   </body>
 </html>
