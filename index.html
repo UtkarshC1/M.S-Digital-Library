@@ -51,7 +51,8 @@
         -moz-osx-font-smoothing: grayscale;
         line-height: 1.5;
         margin: 0;
-        padding-top: 72px; /* Space for fixed header */
+        /* Base space for fixed header */
+        padding-top: 72px;
       }
 
       .header {
@@ -126,15 +127,32 @@
         border: 1.5px solid rgba(155, 17, 30, 0.08);
       }
 
+      /* *** FIX FOR NAV/HERO SPACE AFTER AOS ANIMATION *** */
       .hero {
         max-width: var(--max-width);
-        margin: 0 auto; /* Remove redundant margin values */
-        padding: 28px 20px 40px;
+        margin: 0 auto;
+        /* Increased top padding from 80px to 100px for a definite gap below the fixed nav */
+        padding: 100px 20px 40px; 
         display: grid;
         grid-template-columns: 1fr;
         gap: 24px;
         align-items: center;
       }
+      
+      .hero-image-wrapper {
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+
+      .hero-image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        min-height: 280px; /* Optimized height for mobile */
+      }
+
 
       .hero-inner {
         background: linear-gradient(
@@ -178,7 +196,7 @@
 
       .badge {
         background: var(--card);
-        padding: 10px 14px;
+        padding: 8px 12px;
         border-radius: 12px;
         box-shadow: var(--glass-shadow);
         font-weight: 600;
@@ -186,7 +204,22 @@
         display: flex;
         gap: 10px;
         align-items: center;
-        font-size: 0.9rem;
+        font-size: 0.85rem; /* Optimized size for mobile */
+      }
+      
+      /* Special styling for the Video Tour button badge */
+      .badge.video-tour {
+        background: #f72c44; /* Bright/Vibrant Color for CTA */
+        color: white;
+        box-shadow: var(--shadow);
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+        order: -1; /* Make it appear first on mobile */
+      }
+      
+      .badge.video-tour:hover {
+          transform: scale(1.03);
       }
 
       .container {
@@ -334,7 +367,11 @@
       @media (min-width: 600px) {
         .hero {
           grid-template-columns: 1fr 1fr;
-          padding: 48px 20px 60px; /* More padding on desktop */
+          padding: 48px 20px 60px; /* Desktop spacing */
+        }
+        
+        .hero-image-wrapper img {
+          min-height: 380px; /* Restore desktop height */
         }
 
         .plan {
@@ -345,6 +382,12 @@
         .gallery img {
           flex: 1;
           max-width: 33%;
+        }
+        
+        .badge {
+          padding: 10px 14px; /* Restore desktop size */
+          font-size: 0.9rem;
+          order: initial; /* Restore normal order on desktop */
         }
       }
 
@@ -402,6 +445,9 @@
           </div>
 
           <div class="badges" aria-hidden="false">
+            <div class="badge video-tour" onclick="handleVideoTourClick()">
+              ▶️ YouTube Tour
+            </div>
             <div class="badge">📶 High-Speed Fiber</div>
             <div class="badge">🔒 24/7 Security</div>
             <div class="badge">❄️ A/C Comfort</div>
@@ -409,26 +455,12 @@
           </div>
         </div>
 
-        <div
-          style="
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-          "
-          data-aos="fade-left"
-        >
+        <div class="hero-image-wrapper" data-aos="fade-left">
           <picture>
             <source srcset="placeholder_hero.webp" type="image/webp" />
             <img
               src="placeholder_hero.jpg"
               alt="Study cabin interior with desk and task lamp"
-              style="
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                display: block;
-                min-height: 380px;
-              "
             />
           </picture>
         </div>
@@ -628,7 +660,7 @@
         <div class="contact-grid">
           <div class="map card map" data-aos="fade-up">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14283.435775317316!2d82.16277685!3d26.790937699999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399081a264a4c6a9%3A0x6b241c88147d32c9!2sAyodhya%2C%20Uttar%20Pradesh%20224123!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3561.6800983265807!2d82.20336929999999!3d26.786465399999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399a07ce486665bf%3A0x7ccc6dbf41173b18!2sM.S.%20Digital%20Library!5e0!3m2!1sen!2sin!4v1761494349033!5m2!1sen!2sin"
               width="100%"
               height="100%"
               style="border: 0"
@@ -746,6 +778,12 @@
           }
         });
       });
+
+      // Video Tour Handler - Updated with the new YouTube URL
+      function handleVideoTourClick() {
+        const videoUrl = "https://youtu.be/GJUg8K_Nqmw?si=-NaEjcmIoq1nNqQP";
+        window.open(videoUrl, "_blank");
+      }
 
       // WhatsApp inquiry handler
       function handleWhatsAppSubmit(e) {
